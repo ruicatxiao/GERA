@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-SOURCEFADIR="/data/ruicatxiao/gera_analysis/amr"
-SOURCEGFFDIR="/data/ruicatxiao/gera_analysis/genome"
-OUTDIR="/data/ruicatxiao/gera_analysis/amr"
+SOURCEFADIR="gera_analysis/amr"
+SOURCEGFFDIR="gera_analysis/genome"
+OUTDIR="gera_analysis/amr"
 
 
 

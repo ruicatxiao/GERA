@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-INPUTDIR="/data/lmattei/galapagos/24_isolates/analysis/bacass_dragonflye/bacass_out/dnaapler_output"
-SCRIPTDIR="/home/ruicatxiao/fcs"
-OUTPUTDIR="/data/ruicatxiao/gera_analysis/fcs_adapter_cleaned"
+INPUTDIR="bacass_dragonflye/bacass_out/dnaapler_output"
+SCRIPTDIR="fcs"
+OUTPUTDIR="gera_analysis/fcs_adapter_cleaned"
 
 
 # Loop through all input files

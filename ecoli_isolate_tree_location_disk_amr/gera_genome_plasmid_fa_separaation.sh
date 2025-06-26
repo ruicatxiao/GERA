@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-INDIR="/data/ruicatxiao/gera_analysis/liftoff_fa_gff"
-GENOMEDIR="/data/ruicatxiao/gera_analysis/genome"
-PLASMIDIR="/data/ruicatxiao/gera_analysis/plasmid"
+INDIR="gera_analysis/liftoff_fa_gff"
+GENOMEDIR="gera_analysis/genome"
+PLASMIDIR="gera_analysis/plasmid"
 
 
 # extract genome fasta and their gff

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-SOURCEDIR="/data/ruicatxiao/gera_analysis/amr"
-# GENOMEDIR="/data/ruicatxiao/gera_analysis/genome"
-PLASMIDIR="/data/ruicatxiao/gera_analysis/plasmid"
-OUTDIR="/data/ruicatxiao/gera_analysis/amr"
+SOURCEDIR="gera_analysis/amr"
+# GENOMEDIR="gera_analysis/genome"
+PLASMIDIR="gera_analysis/plasmid"
+OUTDIR="gera_analysis/amr"
 
 find "$SOURCEDIR" -name '*_genome.fasta' -print0 | while IFS= read -r -d '' fainput; do
     faname=$(basename "$fainput" _genome.fasta)

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-TARGETFADIR="/data/lmattei/galapagos/24_isolates/analysis/bacass_dragonflye/bacass_out/dnaapler_output"
-SOURCEFADIR="/data/lmattei/galapagos/24_isolates/analysis/bacass_dragonflye/bacass_out/Medaka"
-SOURCEGFFDIR="/data/lmattei/galapagos/24_isolates/analysis/bacass_dragonflye/bacass_out/Prokka"
-OUTPUTDIR="/data/ruicatxiao/gera_analysis/liftoff_fa_gff"
+TARGETFADIR="bacass_dragonflye/bacass_out/dnaapler_output"
+SOURCEFADIR="bacass_dragonflye/bacass_out/Medaka"
+SOURCEGFFDIR="bacass_dragonflye/bacass_out/Prokka"
+OUTPUTDIR="gera_analysis/liftoff_fa_gff"
 
 
 # Loop through all input files

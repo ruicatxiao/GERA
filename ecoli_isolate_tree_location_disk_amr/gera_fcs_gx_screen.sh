@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-INPUTDIR="/data/ruicatxiao/gera_analysis/fcs_adapter_cleaned/cleaned_sequences"
-SCRIPTDIR="/home/ruicatxiao/fcs"
-OUTPUTDIR="/data/ruicatxiao/gera_analysis/fcs_gx_cleaned"
-GXDBDIR="/home/ruicatxiao/fcs/fcs_gxdb"
+INPUTDIR="gera_analysis/fcs_adapter_cleaned/cleaned_sequences"
+SCRIPTDIR="fcs"
+OUTPUTDIR="gera_analysis/fcs_gx_cleaned"
+GXDBDIR="fcs/fcs_gxdb"
 TAXID=562
 
 # Loop through all input files
