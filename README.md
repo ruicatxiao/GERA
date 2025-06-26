@@ -7,9 +7,9 @@ Scripts and analysis used for GERA project
 
 
 ## Manuscript Authors
-'''
+```
 Arnav Lal, Jade C. Riopelle, Katherine Villarin, Maya Mathur, Lia Enriquez, Naomi Phemister-Jimenez, Katherine Gilbert, Rui Xiao, Demy Castillo, Stephen Cole, Maddie Tilyou, Kelly Kennedy, Ernesto Vaca, Fausto Rodriguez, Whitman Cox, Wilson Castillo, Michael Weisberg, Lisa M. Mattei, Daniel P. Beiting
-'''
+```
 
 ## Code Contributors
 - Lisa Mattei (https://github.com/lisa-mattei)
