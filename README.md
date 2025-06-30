@@ -18,6 +18,7 @@ Lisa M. Mattei, Daniel P. Beiting
 ```
 
 ## Code Contributors
+- Arnav Lal (https://github.com/Arnavlal)
 - Lisa Mattei (https://github.com/lisa-mattei)
 - Daniel Beiting (https://github.com/dpbisme)
 - Rui Xiao (https://github.com/ruicatxiao)
