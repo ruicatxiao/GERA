@@ -141,7 +141,7 @@ p3 <- ggplot(disk_long, aes(x = disk, y = sample, fill = value)) +
 # 4. Combined Heatmap for RGI_CARD and AMRFinder+ results
 
 
-col_order_2 <- c("SAMPLEID","aph(3')-Ia","blaTEM-176","blaTEM","blaTEM-1","floR","blaCTX-M-3","blaCTX-M-15","blaCTX-M-32","blaCTX-M-65","erm(B)","mph(A)","gyrA_D87N","gyrA_S83A","gyrA_S83L","parC_S57T","parC_S80I","parE_S458A","qnrB19","qnrS1","aadA1","aadA5","aph(3'')-Ib","aph(6)-Id","tet(A)","tet(B)","dfrA1","dfrA7","dfrA14","dfrA17","dfrA51","sul1","sul2","sul3","cyaA_S352T","fosA3","sat2","uhpT_E350Q","acrE","acrF","acrS","ampC","ANT(3'')-IIa","CMY-132","EC-13","EC-14","EC-15","EC-18","EC-8","emrE","emrR","evgA","evgS","gadW","glpT","gyrA","leuO","mdtE","mdtF","mdtH","mdtM","mdtN","mdtO","mdtP","Mrx","parC","qacEdelta1","qacJ","qacL","QnrB5","TEM-244","tetR","ugd","uhpT")
+col_order_2 <- c("SAMPLEID", "aadA1", "aadA5", "ANT(3'')-IIa", "aph(3'')-Ib", "aph(3')-Ia", "aph(6)-Id", "qacEdelta1", "qacJ", "qacL", "ampC", "CMY-132", "blaCTX-M-15", "blaCTX-M-3", "blaCTX-M-32", "blaCTX-M-65", "EC-13", "EC-14", "EC-15", "EC-18", "EC-8", "blaTEM", "blaTEM-1", "blaTEM-176", "TEM-244", "erm(B)", "emrR", "gyrA", "gyrA_D87N", "gyrA_S83A", "gyrA_S83L", "mdtH", "parC", "parC_S57T", "parC_S80I", "parE_S458A", "mph(A)", "Mrx", "acrE", "acrF", "acrS", "emrE", "evgA", "evgS", "gadW", "leuO", "mdtE", "mdtF", "mdtM", "mdtN", "mdtO", "mdtP", "ugd", "floR", "cyaA_S352T", "fosA3", "glpT", "uhpT", "uhpT_E350Q", "qnrB19", "QnrB5", "qnrS1", "sat2", "sul1", "sul2", "sul3", "tet(A)", "tet(B)", "tetR", "dfrA1", "dfrA14", "dfrA17", "dfrA51", "dfrA7")
 
 amr_combined_df <- read_tsv("amr_rgi_combined_summary.tsv", col_types = cols()) %>%
   rename(sample = SAMPLEID) %>%
