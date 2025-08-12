@@ -5,6 +5,92 @@ library(readr)
 library(viridis)      
 library(RColorBrewer)
 library(cowplot)
+library(ggtext)  
+library(grid)
+library(ggbiplot)
+library(ggrepel)   
+library(gridExtra)
+
+
+### Plotting genome stats file
+df <- read.delim("gera_genome_all_stats.tsv", sep = "\t")
+
+# Highlight filtered out samples:
+highlight_samples <- c(
+  "PCP06172","PCP06233","PCP07151","PO06022",
+  "SW07095","SW07099","SW07161","SW070920"
+)
+
+# Scatter plot: GC vs Length, labels for highlights
+ggplot(df, aes(x = GC, y = Length, color = Seqtype, size = MeanDepth)) +
+  geom_point(alpha = 0.7) +
+  scale_size(trans = "log10") +
+  geom_text_repel(
+    data = df %>% filter(Sample %in% highlight_samples & Seqtype == "genome"),  # Added Seqtype condition
+    aes(label = Sample),
+    color = "red", 
+    size = 5, 
+    point.padding = unit(2.0, "lines"),  
+    box.padding = unit(2.5, "lines"),    
+    min.segment.length = 0.5,            
+    max.overlaps = 20,                   
+    force = 2,                           
+    arrow = arrow(length = unit(0.02, "npc"), 
+                  type = "closed", 
+                  ends = "last")
+  ) +
+  scale_x_continuous(limits = c(25, 75), expand = c(0,0)) +
+  scale_y_continuous(limits = c(0, 6e6), expand = c(0,0)) +
+  scale_color_discrete() +
+  labs(
+    x = "GC Content",
+    y = "Contig Length",
+    color = "Sequence Type",
+    size = "Mean Depth"
+  ) +
+  theme_bw() +
+  theme(
+    text = element_text(size = 18),
+    axis.text.x = element_text(size = 18)
+  )
+
+# Stacked genome bar plot
+df_genome <- df %>% filter(Seqtype == "genome")
+df_genome_sum <- df_genome %>%
+  group_by(Sample) %>%
+  summarise(total_length = sum(Length), .groups="drop")
+
+order_samples <- df_genome_sum %>%
+  arrange(desc(total_length)) %>%
+  pull(Sample)
+
+df_genome <- df_genome %>%
+  mutate(Sample = factor(Sample, levels = order_samples))
+
+styled_labels <- purrr::set_names(
+  levels(df_genome$Sample),
+  levels(df_genome$Sample)
+)
+styled_labels[highlight_samples] <- paste0(
+  "<span style='color:red;background-color:yellow;'>",
+  highlight_samples,
+  "</span>"
+)
+
+# h-line shows average E.coli genome size
+ggplot(df_genome, aes(x = Sample, y = Length, fill = as.character(Contig))) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("blue", "red")) +
+  geom_hline(yintercept = 4650000, linetype = "dashed", color = "orange", size = 2) +
+  scale_x_discrete(labels = styled_labels) +
+  theme_bw() +
+  theme(
+    text = element_text(size = 18),
+    axis.text.x = element_markdown(
+      angle = 45, hjust = 1, size = 12
+    ),
+    legend.position = "none"
+  )
 
 
 order_df   <- read_tsv("order_by_tree.txt", col_types = cols())
