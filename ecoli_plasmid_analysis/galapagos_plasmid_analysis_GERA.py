@@ -1,26 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 import pandas as pd
 import collections
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.patches as patches
-import os  # Added for directory operations
+import os
 
 sensitive = 2000  # granularity of plots
-
-# Create output directory if it doesn't exist
 output_dir = "heatmap_plots"
 os.makedirs(output_dir, exist_ok=True)
 
 col_names = ["qseqid", "qlen", "sseqid", "slen", "length", "pident", "qstart", "qend", "sstart", "send", "evalue", "bitscore", "qcovhsp", "qcovs"]
-Blast_results = pd.read_csv('/Users/arnav/Galapagos/Galap_Plasmid_Blast_Results.txt', sep="\t", low_memory=False, names=col_names, header=None)
-AMR_ncbi = pd.read_csv('/Users/arnav/Galapagos/output_ncbi.txt', sep="\t", low_memory=False)
+Blast_results = pd.read_csv('Galap_Plasmid_Blast_Results.txt', sep="\t", low_memory=False, names=col_names, header=None)
+AMR_ncbi = pd.read_csv('output_ncbi.txt', sep="\t", low_memory=False)
 sequences = [">SW070910_reoriented.f_2", ">SW070912_reoriented.f_2", ">SW071620_reoriented.f_2", ">PCP06238_reoriented.f_2"]
 
+
 index = 0
+
 for seq in sequences:
     seq_name = seq.replace(">", "").replace("/", "_").replace(".", "_")
     
@@ -58,8 +57,8 @@ for seq in sequences:
     
     # original heatmap
     plt.close()
-    plt.figure(index)
-    fig, ax = plt.subplots(1)
+    plt.figure(index, figsize=(24, 24))  # Increased figure size
+    fig, ax = plt.subplots(1, figsize=(24, 24))  # Increased figure size
     image = ax.imshow(jaccard_array, cmap="Reds")
     ax.set_xticks(np.linspace(0, sensitive, 10), np.linspace(0, np.unique(Blast_results_one_genome["qlen"])[0], 10).astype(int))
     ax.set_yticks(np.linspace(0, sensitive, 10), np.linspace(0, np.unique(Blast_results_one_genome["qlen"])[0], 10).astype(int))
@@ -69,7 +68,6 @@ for seq in sequences:
     for i in AMR.index:
         gene = AMR.loc[i]
         sta, sto = min(gene["START"], gene["END"]), max(gene["START"], gene["END"])
-        # Original rectangles for square heatmap
         rect = patches.Rectangle((sta / scaling_factor, 0), (sto - sta) / scaling_factor, sensitive, linewidth=1, edgecolor='navy', facecolor='none')
         ax.add_patch(rect)
         rect = patches.Rectangle((0, sta / scaling_factor), sensitive, (sto - sta) / scaling_factor, linewidth=1, edgecolor='navy', facecolor='none')
@@ -80,50 +78,42 @@ for seq in sequences:
     square_svg_path = os.path.join(output_dir, f"square_heatmap_{seq_name}.svg")
     plt.savefig(square_svg_path, format='svg', bbox_inches='tight')
     print(f"Saved square heatmap to: {square_svg_path}")
-    
     plt.show()
     
     # triangle Heatmap
-    plt.figure(index + 100)
-    fig, ax = plt.subplots(1)
-    
+    plt.figure(index + 100, figsize=(24, 24))
+    fig, ax = plt.subplots(1, figsize=(24, 24))
+
     jaccard_array_triangle = jaccard_array.copy()
     mask = np.triu(np.ones_like(jaccard_array_triangle, dtype=bool), k=1)
     jaccard_array_triangle[mask] = np.nan
-    
+
     image = ax.imshow(jaccard_array_triangle, cmap="Reds")
     ax.set_xticks(np.linspace(0, sensitive, 10), np.linspace(0, np.unique(Blast_results_one_genome["qlen"])[0], 10).astype(int))
     ax.set_yticks(np.linspace(0, sensitive, 10), np.linspace(0, np.unique(Blast_results_one_genome["qlen"])[0], 10).astype(int))
     ax.tick_params(axis='x',rotation=90)
     fig.colorbar(image)
-
     vertices = [(0, 0), (0, sensitive), (sensitive, sensitive)]
     clip_poly = patches.Polygon(vertices, closed=True, transform=ax.transData)
-    
+
     for i in AMR.index:
         gene = AMR.loc[i]
         sta, sto = min(gene["START"], gene["END"]), max(gene["START"], gene["END"])
         
-
-        rect1 = patches.Rectangle((sta / scaling_factor, 0), (sto - sta) / scaling_factor, sensitive, linewidth=1, edgecolor='navy', facecolor='none')
-        rect2 = patches.Rectangle((0, sta / scaling_factor), sensitive, (sto - sta) / scaling_factor, linewidth=1, edgecolor='navy', facecolor='none')
         rect3 = patches.Rectangle((sta / scaling_factor, sta / scaling_factor), (sto - sta) / scaling_factor, (sto - sta) / scaling_factor, linewidth=1, edgecolor='navy', facecolor='navy')
-        
-
-        rect1.set_clip_path(clip_poly)
-        rect2.set_clip_path(clip_poly)
         rect3.set_clip_path(clip_poly)
-        
-
-        ax.add_patch(rect1)
-        ax.add_patch(rect2)
         ax.add_patch(rect3)
-    
+        
+        gene_name = gene["GENE"]
+        mid_pos = (sta + sto) / 2 / scaling_factor
+        
+        ax.text(mid_pos, mid_pos - 75, gene_name, rotation=0, fontsize=12, color='black', 
+                ha='center', va='top', 
+                bbox=dict(boxstyle="round,pad=0.3", fc=(1, 1, 0, 0.5), ec="none"))
 
     triangle_svg_path = os.path.join(output_dir, f"triangle_heatmap_{seq_name}.svg")
     plt.savefig(triangle_svg_path, format='svg', bbox_inches='tight')
     print(f"Saved triangle heatmap to: {triangle_svg_path}")
-    
     plt.show()
     
     index += 1
