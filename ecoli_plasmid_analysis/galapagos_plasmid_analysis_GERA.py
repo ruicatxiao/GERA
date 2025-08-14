@@ -55,7 +55,7 @@ for seq in sequences:
     
     scaling_factor = np.unique(Blast_results_one_genome["qlen"])[0] / sensitive
     
-    # original heatmap
+    # original heatmap (unchanged)
     plt.close()
     plt.figure(index, figsize=(24, 24))  # Increased figure size
     fig, ax = plt.subplots(1, figsize=(24, 24))  # Increased figure size
@@ -87,29 +87,66 @@ for seq in sequences:
     jaccard_array_triangle = jaccard_array.copy()
     mask = np.triu(np.ones_like(jaccard_array_triangle, dtype=bool), k=1)
     jaccard_array_triangle[mask] = np.nan
-
     image = ax.imshow(jaccard_array_triangle, cmap="Reds")
     ax.set_xticks(np.linspace(0, sensitive, 10), np.linspace(0, np.unique(Blast_results_one_genome["qlen"])[0], 10).astype(int))
     ax.set_yticks(np.linspace(0, sensitive, 10), np.linspace(0, np.unique(Blast_results_one_genome["qlen"])[0], 10).astype(int))
-    ax.tick_params(axis='x',rotation=90)
+    ax.tick_params(axis='x', rotation=90)
     fig.colorbar(image)
+    
     vertices = [(0, 0), (0, sensitive), (sensitive, sensitive)]
     clip_poly = patches.Polygon(vertices, closed=True, transform=ax.transData)
+    
 
+    target_genes = set([  # keep empty to label all, or list subset
+        # "blaCTX-M-15", "qnrS1", "tet(A)"
+    ])
+    label_offset   = 75     # base distance above diagonal
+    vertical_step  = 100     # extra vertical spacing per stacked label
+    stack_bin      = 100     # "region" width to trigger vertical stacking
+    label_stack_ct = defaultdict(int)
+    
     for i in AMR.index:
         gene = AMR.loc[i]
         sta, sto = min(gene["START"], gene["END"]), max(gene["START"], gene["END"])
-        
-        rect3 = patches.Rectangle((sta / scaling_factor, sta / scaling_factor), (sto - sta) / scaling_factor, (sto - sta) / scaling_factor, linewidth=1, edgecolor='navy', facecolor='navy')
+    
+        rect3 = patches.Rectangle(
+            (sta / scaling_factor, sta / scaling_factor),
+            (sto - sta) / scaling_factor,
+            (sto - sta) / scaling_factor,
+            linewidth=1, edgecolor='navy', facecolor='navy'
+        )
         rect3.set_clip_path(clip_poly)
         ax.add_patch(rect3)
-        
+    
         gene_name = gene["GENE"]
+        if target_genes and (gene_name not in target_genes):
+            continue
+    
         mid_pos = (sta + sto) / 2 / scaling_factor
-        
-        ax.text(mid_pos, mid_pos - 75, gene_name, rotation=0, fontsize=12, color='black', 
-                ha='center', va='top', 
-                bbox=dict(boxstyle="round,pad=0.3", fc=(1, 1, 0, 0.5), ec="none"))
+    
+        bin_id = int(mid_pos // stack_bin)
+        stack_idx = label_stack_ct[bin_id]
+        label_stack_ct[bin_id] += 1
+    
+        label_x = float(np.clip(mid_pos, 2, sensitive - 2))
+        label_y = float(max(2, mid_pos - label_offset - stack_idx * vertical_step))
+    
+        txt = TextArea(gene_name, textprops=dict(color='black', fontsize=12))
+        ab = AnnotationBbox(
+            txt,
+            (mid_pos, mid_pos),          # point on diagonal
+            xybox=(label_x, label_y),    # label position
+            xycoords='data',
+            boxcoords='data',
+            box_alignment=(0.5, 1.0),    # xybox is top-center of the label
+            bboxprops=dict(boxstyle="round,pad=0.3", fc=(1, 1, 0, 0.5), ec="none"),
+            arrowprops=dict(arrowstyle='-', linewidth=0.6, color='black'),
+            zorder=20,
+            frameon=True
+        )
+        ab.set_clip_on(False)
+        ax.add_artist(ab)
+
 
     triangle_svg_path = os.path.join(output_dir, f"triangle_heatmap_{seq_name}.svg")
     plt.savefig(triangle_svg_path, format='svg', bbox_inches='tight')
