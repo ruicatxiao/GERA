@@ -15,3 +15,12 @@ This is incomplete, will fill in more details later
 - Keep .gbff files
 - Keep just AMR genes. 
 - Run clinker (v0.0.31) on whole sequence, and just AMR genes, e.g. ```  clinker /.../*.gbff -p visualization.html ```
+
+
+## Analysis 2.1: Plasmid synteny analysis with MUMmer4 and Circos
+- Single python script for processing plasmid from fasta to Circos links file
+- Same single python script for highlighting AMR gene location
+- Highlight plasmids' origin of replication
+```
+circos -conf gera_circos.conf
+```

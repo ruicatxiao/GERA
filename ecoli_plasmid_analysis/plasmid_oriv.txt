@@ -1,0 +1,4 @@
+PCP06238_contig_2	141200	142200	color=black thickness=20p
+SW071620_contig_2	88700	89700	color=black thickness=20p
+SW070910_contig_2	186600	187600	color=black thickness=20p
+SW070912_contig_2	850	1850	color=black thickness=20p
