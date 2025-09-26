@@ -10,7 +10,7 @@ Since the publication of Charles Darwins On the Origin of Species in 1859, the G
 ## Per Folder Scripts and Files Overview
 Detailed per folder script explanation.
 
-### Ecoli_isolate_basecall_assembly.
+### E.coli_isolate_basecall_assembly. For figure 5 and supplemental figure 2.
 This folder contains scripts for basecalling and assembly of long-read sequencing data from E. coli isolates.
 
     gera_dorado_demux_call.sh
@@ -22,7 +22,7 @@ This folder contains scripts for basecalling and assembly of long-read sequencin
     gera_autocycler.sh
     Runs multiple assemblers on subsampled reads using Autocycler assembler for comparative genome assembly.
 
-### Ecoli_isolate_tree_location_disk_amr.
+### Ecoli_isolate_tree_location_disk_amr. For figure 5 and supplemental figure 2.
 Scripts used for analyzing E. coli isolate data including phylogenetic context, location, antimicrobial resistance (AMR), and genomic features.
 
     gera_run_anvio.sh
@@ -73,7 +73,7 @@ Scripts used for analyzing E. coli isolate data including phylogenetic context, 
     gera_anvio_createdb.sh
     Generates contigs databases for Anvi'o from FASTA files.
 
-### Ecoli_plasmid_analysis
+### Ecoli_plasmid_analysis. For figure 6 and supplemental figure 3.
 Contains scripts and files used for analyzing plasmids, including comparisons, annotations, and visualization using Circos.
 
     plasmid_blast.bash
@@ -103,7 +103,7 @@ Contains scripts and files used for analyzing plasmids, including comparisons, a
     galapagos_plasmid_analysis_GERA.py
     Analyzes plasmid data in a heatmap format using Python, including visualizing AMR regions and SNP clustering.
 
-### Metagenomic
+### Metagenomic. For figure 3 and 4.
 Scripts for processing metagenomic data, especially long-read assemblies and AMR gene identification. 
 
     run_metaflye.sh
@@ -121,6 +121,33 @@ Deprecated scripts for SNP calling and plotting, particularly from AMR-focused r
 
     snp_plotting.R
     Visualizes SNP distribution, frequency, and clustering using ggplot2 and pheatmap.
+
+
+### Softwares and their versions.
+All softwares installed on a Ubuntu 24.04 x86-64 server
+| Software                      | Version        | Note                                                                 |
+|-------------------------------|----------------|----------------------------------------------------------------------|
+| dorado                        | 0.3.1          | For metagenomic samples using `dna_r9.4.1_e8_sup@v3.6`              |
+| dorado                        | 0.9.6          | For genomic isolate samples using `dna_r10.4.1_e8.2_400bps_sup@v5.2.0` |
+| R                             | 4.5            | Base R for all analysis and plotting, includes all 4.5 compatible packages |
+| Autocycler                    | 0.2.1          | For genome assembly                                                 |
+| dnaapler                      | 1.0.1          | For re-orienting assembly                                           |
+| Flye                          | 2.9.5-b1801    | For metagenomic assembler                                           |
+| Racon                         | 1.5.0          | For polishing                                                       |
+| medaka                        | 1.8.0          | For polishing                                                       |
+| proovframe                    | 0.9.7          | For polishing                                                       |
+| AMRFinderPlus                 | 4.0.19         | For AMR discovery                                                   |
+| AMRFinderPlus Database        | 2024-12-18.7   | For AMR gene discovery                                              |
+| ANVI'o                        | 8.0            | For E.coli isolates' single copy gene                               |
+| MrBayes                       | 3.2.7          | For E.coli isolates phylogeny                                       |
+| Resistance Gene Identifier    | 6.0.4          | For AMR gene discovery                                              |
+| Comprehensive Antibiotic Resistance Database | 3.2.7 | For AMR gene discovery                                              |
+| mlst                          | 2.19.0         | For MLST typing                                                     |
+| MOB-suite                     | 3.1.9          | For plasmid mobility typing                                         |
+| MUMmer                        | 4.0.1          | For plasmid synteny analysis                                        |
+| Python                        | 3.12.4         | For plasmid synteny analysis                                        |
+| Circos                        | 0.69-8         | For plasmid synteny analysis                                        |
+| OriV-Finder                   | webtool        | For plasmid synteny analysis                                        |
 
 
 ## Manuscript Authors
