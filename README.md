@@ -192,7 +192,5 @@ Lisa M. Mattei, Daniel P. Beiting
 
 
 
-## Citations
-```
-"Human wastewater contamination drives the emergence of novel multidrug resistant bacteria in the Galápagos marine ecosystem" Arnav Lal, Jade C. Riopelle, Katherine Villarin, Maya Mathur, Lia Enriquez, Rui Xiao, Naomi Phemister-Jimenez, Katherine Gilbert, Stephen D. Cole, Maddie Tilyou, Kelly P. Kennedy, Ernesto Vaca, Wilson Castillo, Michael Weisberg, Lisa M. Mattei, Daniel P. Beiting bioRxiv 2025.09.12.675863; doi: https://doi.org/10.1101/2025.09.12.675863
-```
+## If you use this repo, please cite our paper:
+"Human wastewater contamination drives the emergence of novel multidrug resistant bacteria in the Galápagos marine ecosystem" Arnav Lal, Jade C. Riopelle, Katherine Villarin, Maya Mathur, Lia Enriquez, Rui Xiao, Naomi Phemister-Jimenez, Katherine Gilbert, Stephen D. Cole, Maddie Tilyou, Kelly P. Kennedy, Ernesto Vaca, Wilson Castillo, Michael Weisberg, Lisa M. Mattei, Daniel P. 
