@@ -2,6 +2,9 @@
 Scripts and analysis used for GERA project
 ![Image](https://github.com/user-attachments/assets/eb9b428c-5938-486d-900a-fb9b93c016a4)
 
+## Manuscript Title
+Human wastewater contamination drives the emergence of novel multidrug resistant bacteria in the Galápagos marine ecosystem
+
 ## Abstract
 Since the publication of Charles Darwins On the Origin of Species in 1859, the Galapagos archipelago has become emblematic of natural selection and evolution. While the lens of evolution in the Galapagos has traditionally focused on iconic megafauna, including finches, marine iguanas, and giant tortoises, the marine environment is also home to diverse microbial ecosystems that are constantly evolving under selective pressure from environmental factors such as human activity. We focused on the second most populated island within the archipelago - San Cristobal - an island that has experienced rapid urbanization and intense international tourism pressure. Using a lab-free approach, we spatiotemporally mapped wastewater contamination around San Cristobal. On-site metagenomic sequencing revealed a stark shift in genera and a higher count of antimicrobial resistance genes at wastewater-associated sites. Over 40% of lactose-fermenting Enterobacteriaceae isolates collected from sewage and wastewater outfall exhibited multidrug resistance (MDR). Long-read sequencing and de novo assembly of bacterial genomes and plasmids from MDR Escherichia coli revealed frequent and rapid reassortment of antimicrobial resistance genes on plasmids, generating unique antimicrobial resistance profiles. This study not only provides a framework for conducting antimicrobial resistance research in low-resource settings but also underscores the impact of wastewater contamination on the environmental AMR landscape and highlights potential threats to human and animal health.
 
@@ -9,6 +12,30 @@ Since the publication of Charles Darwins On the Origin of Species in 1859, the G
 
 ## Per Folder Scripts and Files Overview
 Detailed per folder script explanation.
+
+### qPCR_analysis. For figure 2 and supplemental figure 1.
+    long_qpcr_rcard.R
+    For qPCR results plotting
+
+### Metagenomic. For figure 3 and 4.
+Scripts for processing metagenomic data, especially long-read assemblies and AMR gene identification. 
+
+    run_metaflye.sh
+    Runs MetaFlye assembler on long-read data to generate metagenomic assemblies.
+    run_amr_reads_prep.sh
+    Prepares AMR reads by converting FASTQ to FASTA, building BLAST databases, and extracting reads with AMR hits.
+    abx_table.R
+    Generating table for antibiotic resistenc genes
+    abx_upset.R
+    Generating UpSet plot for antibiotic resistenc genes
+    nanopore_upload.sh
+    Script for uploading to CZ ID
+    amrfinder_script.sh
+    AMRFinder plus run script for metagenomic reads
+    gera_figure3.r
+    Plotting script for Figure 3
+
+
 
 ### E.coli_isolate_basecall_assembly. For figure 5 and supplemental figure 2.
 This folder contains scripts for basecalling and assembly of long-read sequencing data from E. coli isolates.
@@ -102,15 +129,6 @@ Contains scripts and files used for analyzing plasmids, including comparisons, a
 
     galapagos_plasmid_analysis_GERA.py
     Analyzes plasmid data in a heatmap format using Python, including visualizing AMR regions and SNP clustering.
-
-### Metagenomic. For figure 3 and 4.
-Scripts for processing metagenomic data, especially long-read assemblies and AMR gene identification. 
-
-    run_metaflye.sh
-    Runs MetaFlye assembler on long-read data to generate metagenomic assemblies.
-
-    run_amr_reads_prep.sh
-    Prepares AMR reads by converting FASTQ to FASTA, building BLAST databases, and extracting reads with AMR hits.
 
 
 ### SNP_analysis (deprecated)
