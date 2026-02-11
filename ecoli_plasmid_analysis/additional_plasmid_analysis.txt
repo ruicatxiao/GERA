@@ -1,0 +1,3 @@
+For synteny plots:
+annotate using Bakta Web - Escherichia coli, complete plasmid, download *.gbff files
+clinker two_strain_comparison/*.gbff -i 0.7 -p gd_2strain_rotated.html

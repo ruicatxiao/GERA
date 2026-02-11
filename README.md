@@ -181,7 +181,8 @@ All softwares installed on a Ubuntu 24.04 x86-64 server
 | Python                        | 3.12.4         | For plasmid synteny analysis                                        |
 | Circos                        | 0.69-8         | For plasmid synteny analysis                                        |
 | OriV-Finder                   | webtool        | For plasmid synteny analysis                                        |
-
+| clinker                   | 0.0.32        | For plasmid synteny analysis
+| modkit                   | 0.6.1        | For ONT DNA methylation analysis   
 
 ## Manuscript Authors
 ```
