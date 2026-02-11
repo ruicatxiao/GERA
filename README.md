@@ -36,9 +36,8 @@ Scripts for processing metagenomic data, especially long-read assemblies and AMR
     Plotting script for Figure 3
 
 
-
-### E.coli_isolate_basecall_assembly. For figure 5 and supplemental figure 2.
-This folder contains scripts for basecalling and assembly of long-read sequencing data from E. coli isolates.
+### E.colii_dna_methylation_analysis.
+This folder contains scripts for performing ONT DNA methylation analysis
 
     gera_dnam_prep.sh
     Preparing genes of interest to bed file, prepare bedmethyl file. Use ONT modkit to output gene body and promoter DNA methylations
@@ -50,8 +49,8 @@ This folder contains scripts for basecalling and assembly of long-read sequencin
     R code for performing differential methylation analysis and plotting
 
 
-### E.colii_dna_methylation_analysis.
-This folder contains scripts for performing ONT DNA methylation analysis
+### E.coli_isolate_basecall_assembly. For figure 5 and supplemental figure 2.
+This folder contains scripts for basecalling and assembly of long-read sequencing data from E. coli isolates.
 
     gera_dorado_demux_call.sh
     Runs Dorado basecaller on POD5 files, demultiplexes barcoded reads, and converts BAMs to FASTQ format.
