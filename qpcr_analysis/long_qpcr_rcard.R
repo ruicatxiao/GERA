@@ -21,7 +21,7 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
   }
 }
 
-### Figure 2B ###
+### Figure 2C ###
 
 #LONGITUDINAL qPCR DATA BY SITE
 KGV_qpcr_data <- read_excel("KGV_qpcr_data.xlsx")
@@ -56,7 +56,7 @@ svg("qpcr_long_3.svg", width = 24, height = 10)
 print(qpcr_long_3)
 dev.off()
 
-### Figure S1 ###
+### Figure S2 ###
 
 #LONGITUDINAL RCard DATA BY SITE
 KGV_rcard_data <- read_excel("KGV_rcard_data.xlsx")
