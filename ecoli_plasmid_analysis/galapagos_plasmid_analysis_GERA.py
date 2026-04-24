@@ -54,6 +54,11 @@ for seq in sequences:
         index_i += 1
     
     scaling_factor = np.unique(Blast_results_one_genome["qlen"])[0] / sensitive
+    # Save full jaccard matrix
+    matrix_df = pd.DataFrame(jaccard_array)
+    matrix_file = os.path.join(output_dir, f"jaccard_matrix_{seq_name}.csv")
+    matrix_df.to_csv(matrix_file, index=False, header=False)
+    print(f"Saved full jaccard matrix to: {matrix_file}")
     
     # original heatmap (unchanged)
     plt.close()
@@ -87,28 +92,39 @@ for seq in sequences:
     jaccard_array_triangle = jaccard_array.copy()
     mask = np.triu(np.ones_like(jaccard_array_triangle, dtype=bool), k=1)
     jaccard_array_triangle[mask] = np.nan
+
+    # Save triangular jaccard matrix
+    matrix_tri_df = pd.DataFrame(jaccard_array_triangle)
+    matrix_tri_file = os.path.join(output_dir, f"jaccard_matrix_triangular_{seq_name}.csv")
+    matrix_tri_df.to_csv(matrix_tri_file, index=False, header=False)
+    print(f"Saved triangular jaccard matrix to: {matrix_tri_file}")
+
+
+    # triangle Heatmap (keep your existing setup above this)
     image = ax.imshow(jaccard_array_triangle, cmap="Reds")
     ax.set_xticks(np.linspace(0, sensitive, 10), np.linspace(0, np.unique(Blast_results_one_genome["qlen"])[0], 10).astype(int))
     ax.set_yticks(np.linspace(0, sensitive, 10), np.linspace(0, np.unique(Blast_results_one_genome["qlen"])[0], 10).astype(int))
     ax.tick_params(axis='x', rotation=90)
     fig.colorbar(image)
     
+    # clip polygon for upper-left triangle (unchanged)
     vertices = [(0, 0), (0, sensitive), (sensitive, sensitive)]
     clip_poly = patches.Polygon(vertices, closed=True, transform=ax.transData)
     
-
+    # --- NEW config for label stacking and layout ---
     target_genes = set([  # keep empty to label all, or list subset
         # "blaCTX-M-15", "qnrS1", "tet(A)"
     ])
-    label_offset   = 75     # base distance above diagonal
-    vertical_step  = 100     # extra vertical spacing per stacked label
-    stack_bin      = 100     # "region" width to trigger vertical stacking
+    label_offset   = 125     # base distance above diagonal
+    vertical_step  = 150     # extra vertical spacing per stacked label in same region
+    stack_bin      = 150     # "region" width (in heatmap units) to trigger vertical stacking
     label_stack_ct = defaultdict(int)
     
     for i in AMR.index:
         gene = AMR.loc[i]
         sta, sto = min(gene["START"], gene["END"]), max(gene["START"], gene["END"])
     
+        # existing highlight rectangle (unchanged)
         rect3 = patches.Rectangle(
             (sta / scaling_factor, sta / scaling_factor),
             (sto - sta) / scaling_factor,
@@ -122,16 +138,20 @@ for seq in sequences:
         if target_genes and (gene_name not in target_genes):
             continue
     
+        # position along diagonal in heatmap coords
         mid_pos = (sta + sto) / 2 / scaling_factor
     
+        # --- NEW: stack labels vertically within the same local region ---
         bin_id = int(mid_pos // stack_bin)
         stack_idx = label_stack_ct[bin_id]
         label_stack_ct[bin_id] += 1
     
+        # compute label anchor (top-center of the label box)
         label_x = float(np.clip(mid_pos, 2, sensitive - 2))
         label_y = float(max(2, mid_pos - label_offset - stack_idx * vertical_step))
     
-        txt = TextArea(gene_name, textprops=dict(color='black', fontsize=12))
+        # --- NEW: use AnnotationBbox so the line (arrow) stops at the label edge automatically ---
+        txt = TextArea(gene_name, textprops=dict(color='black', fontsize=18))
         ab = AnnotationBbox(
             txt,
             (mid_pos, mid_pos),          # point on diagonal
@@ -144,6 +164,7 @@ for seq in sequences:
             zorder=20,
             frameon=True
         )
+        # ensure the leader line/label are not clipped by the triangle mask
         ab.set_clip_on(False)
         ax.add_artist(ab)
 
